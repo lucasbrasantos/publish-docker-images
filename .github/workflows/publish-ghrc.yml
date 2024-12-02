@@ -25,4 +25,4 @@ jobs:
 
     - name: Push Docker image
       run: |
-        docker push ghcr.io/publish-docker-images/${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.image_name }}:latest
+        docker push ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.image_name }}:latest
