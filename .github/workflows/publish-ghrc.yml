@@ -1,0 +1,28 @@
+name: Docker Image CI - GitHub Container Registry
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_name:
+        description: 'Docker image name'
+        required: true
+        default: 'hello-world'
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Login to GitHub Container Registry
+      run: |
+        echo "${{ secrets.GH_PAT }}" | docker login ghcr.io -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+    - name: Build Docker image
+      run: |
+        docker build -t ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.image_name }}:latest .
+
+    - name: Push Docker image
+      run: |
+        docker push ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.inputs.image_name }}:latest
