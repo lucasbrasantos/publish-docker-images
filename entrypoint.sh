@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo "Olá Edmar"
+echo "Hello world! from git"
